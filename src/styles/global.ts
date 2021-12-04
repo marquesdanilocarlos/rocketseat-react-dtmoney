@@ -13,6 +13,7 @@ export const GlobalStyle = createGlobalStyle`
     --text-body: #969cb3;
     --shape: #ffffff;
     --bs-success-rgb: 51,204,149;
+    --bs-danger-rgb: 229,46,77;
   }
 
   * {
