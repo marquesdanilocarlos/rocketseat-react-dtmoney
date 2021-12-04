@@ -1,8 +1,6 @@
 import styled from "styled-components";
 
-export const Container = styled.header`
-    background: var(--bs-blue);
-`;
+export const Container = styled.header``;
 
 export const Content = styled.div`
     margin: 0 auto;

@@ -5,11 +5,10 @@ export const Container = styled.div`
 
     .table-light {
         color: var(--text-body);
-        border-spacing: 0.5rem;
+        font-weight: 300;
 
-        tbody,
-        thead {
-            font-weight: 300;
+        tbody {
+            border-top-width: 0.09rem;
         }
     }
 `;
