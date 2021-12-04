@@ -1,15 +1,16 @@
 import { createGlobalStyle } from "styled-components";
+import "bootstrap/dist/css/bootstrap.css";
 
 export const GlobalStyle = createGlobalStyle`
+  
   :root {
-    --background: #f0f2f5;
-    --red: #e52e4d;
-    --blue: #5429cc;
+    --bs-body-bg: #f0f2f5;
+    --bs-red: #e52e4d;
+    --bs-blue: #5429cc;
     --blue-light: #6933ff;
     --text-title: #363f5f;
     --text-body: #969cb3;
     --shape: #ffffff;
-
   }
 
   * {
@@ -29,7 +30,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    background: var(---background);
+    background: var(--bs-body-bg);
     -webkit-font-smoothing: antialiased;
   }
 
@@ -44,6 +45,7 @@ export const GlobalStyle = createGlobalStyle`
 
   button {
     cursor: pointer;
+    border: none;
   }
 
   [disabled] {
