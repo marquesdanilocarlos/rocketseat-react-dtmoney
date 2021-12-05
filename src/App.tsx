@@ -27,12 +27,12 @@ export function App() {
                     onOpenNewTransactionModal={handleOpenNewTransactionModal}
                 />
                 <Dashboard />
+                <NewTransactionModal
+                    isOpen={newTransactionModalIsOpen}
+                    onRequestClose={handleCloseTransactionModal}
+                />
             </TransactionsProvider>
             <Footer />
-            <NewTransactionModal
-                isOpen={newTransactionModalIsOpen}
-                onRequestClose={handleCloseTransactionModal}
-            />
         </>
     );
 }

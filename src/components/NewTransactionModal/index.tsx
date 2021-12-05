@@ -7,12 +7,19 @@ import {
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { FormEvent, useState } from "react";
-import { api } from "../../services/api";
+import { FormEvent, useState, useContext } from "react";
+import { TransactionsContext } from "../../TransactionsContext";
 
 interface NewTransactionModalProps {
     isOpen: boolean;
     onRequestClose: () => void;
+}
+
+interface Transaction {
+    title: string;
+    amount: number;
+    type: string;
+    category: string;
 }
 
 export function NewTransactionModal({
@@ -21,14 +28,9 @@ export function NewTransactionModal({
 }: NewTransactionModalProps) {
     Modal.setAppElement("#root");
 
-    const [type, setType] = useState("income");
+    const { createNewTransaction } = useContext(TransactionsContext);
 
-    interface Transaction {
-        title: string;
-        amount: number;
-        type: string;
-        category: string;
-    }
+    const [type, setType] = useState("income");
 
     const [transaction, setTransaction] = useState<Transaction>({
         title: "",
@@ -39,7 +41,7 @@ export function NewTransactionModal({
 
     function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault();
-        api.post("/transactions", transaction);
+        createNewTransaction(transaction);
     }
 
     return (
