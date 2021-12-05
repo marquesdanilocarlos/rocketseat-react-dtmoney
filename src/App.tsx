@@ -5,7 +5,7 @@ import { GlobalStyle } from "./styles/global";
 
 import { useState } from "react";
 import { NewTransactionModal } from "./components/NewTransactionModal";
-import { TransactionsContext } from "./TransactionsContext";
+import { TransactionsProvider } from "./TransactionsContext";
 
 export function App() {
     const [newTransactionModalIsOpen, setNewTransactionModalIsOpen] =
@@ -22,12 +22,12 @@ export function App() {
     return (
         <>
             <GlobalStyle />
-            <TransactionsContext.Provider value={["Danilo"]}>
+            <TransactionsProvider>
                 <Header
                     onOpenNewTransactionModal={handleOpenNewTransactionModal}
                 />
                 <Dashboard />
-            </TransactionsContext.Provider>
+            </TransactionsProvider>
             <Footer />
             <NewTransactionModal
                 isOpen={newTransactionModalIsOpen}
