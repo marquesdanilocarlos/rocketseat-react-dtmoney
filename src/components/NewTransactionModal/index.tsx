@@ -25,14 +25,14 @@ export function NewTransactionModal({
 
     interface Transaction {
         title: string;
-        value: number;
+        amount: number;
         type: string;
         category: string;
     }
 
     const [transaction, setTransaction] = useState<Transaction>({
         title: "",
-        value: 0,
+        amount: 0,
         type: type,
         category: "",
     });
@@ -66,7 +66,7 @@ export function NewTransactionModal({
                     onChange={(event) => {
                         setTransaction({
                             title: event.target.value,
-                            value: transaction.value,
+                            amount: transaction.amount,
                             type: type,
                             category: transaction.category,
                         });
@@ -76,11 +76,11 @@ export function NewTransactionModal({
                     className="form-control form-control-lg mb-3"
                     type="number"
                     placeholder="Valor"
-                    value={transaction.value}
+                    value={transaction.amount}
                     onChange={(event) => {
                         setTransaction({
                             title: transaction.title,
-                            value: Number(event.target.value),
+                            amount: Number(event.target.value),
                             type: type,
                             category: transaction.category,
                         });
@@ -120,7 +120,7 @@ export function NewTransactionModal({
                     onChange={(event) => {
                         setTransaction({
                             title: transaction.title,
-                            value: transaction.value,
+                            amount: transaction.amount,
                             type: type,
                             category: event.target.value,
                         });

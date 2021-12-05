@@ -1,10 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "../../services/api";
 import { Container } from "./styles";
 
+interface Transaction {
+    id: number;
+    title: string;
+    amount: number;
+    type: string;
+    category: string;
+    createdAt: string;
+}
+
 export function Transactions() {
+    const [transactions, setTransactions] = useState<Transaction[]>([]);
+
     useEffect(() => {
-        api.get("/transactions").then((response) => console.log(response.data));
+        api.get("/transactions").then((response) =>
+            setTransactions(response.data.transactions)
+        );
     }, []);
 
     return (
@@ -19,70 +32,31 @@ export function Transactions() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr className="table-light">
-                        <td className="table-light">
-                            Desenvolvimento de website
-                        </td>
-                        <td className="table-light text-success">
-                            R$ 12.000,00
-                        </td>
-                        <td className="table-light">Desenvolvimento</td>
-                        <td className="table-light">21/11/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">Aluguel</td>
-                        <td className="table-light text-danger">-R$ 800,00</td>
-                        <td className="table-light">Moradia</td>
-                        <td className="table-light">13/05/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">
-                            Desenvolvimento de website
-                        </td>
-                        <td className="table-light text-success">
-                            R$ 12.000,00
-                        </td>
-                        <td className="table-light">Desenvolvimento</td>
-                        <td className="table-light">21/11/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">Aluguel</td>
-                        <td className="table-light text-danger">-R$ 800,00</td>
-                        <td className="table-light">Moradia</td>
-                        <td className="table-light">13/05/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">
-                            Desenvolvimento de website
-                        </td>
-                        <td className="table-light text-success">
-                            R$ 12.000,00
-                        </td>
-                        <td className="table-light">Desenvolvimento</td>
-                        <td className="table-light">21/11/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">Aluguel</td>
-                        <td className="table-light text-danger">-R$ 800,00</td>
-                        <td className="table-light">Moradia</td>
-                        <td className="table-light">13/05/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">
-                            Desenvolvimento de website
-                        </td>
-                        <td className="table-light text-success">
-                            R$ 12.000,00
-                        </td>
-                        <td className="table-light">Desenvolvimento</td>
-                        <td className="table-light">21/11/2021</td>
-                    </tr>
-                    <tr className="table-light">
-                        <td className="table-light">Aluguel</td>
-                        <td className="table-light text-danger">-R$ 800,00</td>
-                        <td className="table-light">Moradia</td>
-                        <td className="table-light">13/05/2021</td>
-                    </tr>
+                    {transactions.map((transaction) => (
+                        <tr key={transaction.id} className="table-light">
+                            <td className="table-light">{transaction.title}</td>
+                            <td
+                                className={`table-light ${
+                                    transaction.type === "income"
+                                        ? "text-success"
+                                        : "text-danger"
+                                }`}
+                            >
+                                {new Intl.NumberFormat("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL",
+                                }).format(transaction.amount)}
+                            </td>
+                            <td className="table-light">
+                                {transaction.category}
+                            </td>
+                            <td className="table-light">
+                                {new Intl.DateTimeFormat("pt-BR").format(
+                                    new Date(transaction.createdAt)
+                                )}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
         </Container>
