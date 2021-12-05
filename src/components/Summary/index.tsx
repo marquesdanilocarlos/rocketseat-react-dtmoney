@@ -8,6 +8,27 @@ import { useContext } from "react";
 export function Summary() {
     const { transactions } = useContext(TransactionsContext);
 
+    const summary = transactions.reduce(
+        (accumulator, transaction) => {
+            if (transaction.type === "income") {
+                accumulator.incomes += transaction.amount;
+                accumulator.total += transaction.amount;
+            }
+
+            if (transaction.type === "outcome") {
+                accumulator.outcomes += transaction.amount;
+                accumulator.total -= transaction.amount;
+            }
+
+            return accumulator;
+        },
+        {
+            incomes: 0,
+            outcomes: 0,
+            total: 0,
+        }
+    );
+
     return (
         <Container>
             <div className="row">
@@ -18,7 +39,12 @@ export function Summary() {
                                 <h5>Entradas</h5>
                                 <img src={incomeImg} alt="Entradas" />
                             </header>
-                            <strong>R$ 1000,00</strong>
+                            <strong>
+                                {new Intl.NumberFormat("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL",
+                                }).format(summary.incomes)}
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -30,7 +56,12 @@ export function Summary() {
                                 <h5>Saídas</h5>
                                 <img src={outcomeImg} alt="Saídas" />
                             </header>
-                            <strong>R$ -500,00</strong>
+                            <strong>
+                                {new Intl.NumberFormat("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL",
+                                }).format(summary.outcomes)}
+                            </strong>
                         </div>
                     </div>
                 </div>
@@ -42,7 +73,12 @@ export function Summary() {
                                 <h5>Total</h5>
                                 <img src={totalImg} alt="Total" />
                             </header>
-                            <strong>R$ 500,00</strong>
+                            <strong>
+                                {new Intl.NumberFormat("pt-BR", {
+                                    style: "currency",
+                                    currency: "BRL",
+                                }).format(summary.total)}
+                            </strong>
                         </div>
                     </div>
                 </div>
