@@ -1,8 +1,13 @@
 import Modal from "react-modal";
-import { Container, TransactionTypeContainer } from "./styles";
+import {
+    Container,
+    TransactionTypeButton,
+    TransactionTypeContainer,
+} from "./styles";
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
+import { useState } from "react";
 
 interface NewTransactionModalProps {
     isOpen: boolean;
@@ -14,6 +19,8 @@ export function NewTransactionModal({
     onRequestClose,
 }: NewTransactionModalProps) {
     Modal.setAppElement("#root");
+
+    const [type, setType] = useState("income");
 
     return (
         <Modal
@@ -46,14 +53,26 @@ export function NewTransactionModal({
                     role="group"
                     aria-label="Tipo de transação"
                 >
-                    <button type="button" className="btn btn-lg btn-light">
+                    <TransactionTypeButton
+                        type="button"
+                        className="btn btn-lg"
+                        onClick={() => setType("income")}
+                        isActive={type === "income"}
+                        activeColor="green"
+                    >
                         <img src={incomeImg} alt="Entrada" />
                         <span className="ms-1">Entrada</span>
-                    </button>
-                    <button type="button" className="btn btn-lg btn-light">
+                    </TransactionTypeButton>
+                    <TransactionTypeButton
+                        type="button"
+                        className="btn btn-lg"
+                        onClick={() => setType("outcome")}
+                        isActive={type === "outcome"}
+                        activeColor="red"
+                    >
                         <img src={outcomeImg} alt="Saída" className="mr-1" />
                         <span className="ms-1">Saída</span>
-                    </button>
+                    </TransactionTypeButton>
                 </TransactionTypeContainer>
                 <input
                     className="form-control form-control-lg mb-3"

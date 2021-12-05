@@ -20,11 +20,26 @@ export const Container = styled.form`
 
 export const TransactionTypeContainer = styled.div`
     width: 100%;
-    .btn {
-        border: 1px solid var(--text-body);
-        border-radius: 0.25rem;
-        &:hover {
-            filter: brightness(90%);
-        }
+`;
+
+interface TransactionTypeButtonProps {
+    isActive: boolean;
+    activeColor: "red" | "green";
+}
+
+const activeColors = {
+    green: "rgba(51,204,149, 0.1)",
+    red: "rgba(229,46,77, 0.1)",
+};
+
+export const TransactionTypeButton = styled.button<TransactionTypeButtonProps>`
+    border: 1px solid var(--text-body);
+    border-radius: 0.25rem;
+    background: ${(props) =>
+        props.isActive
+            ? activeColors[props.activeColor] + "!important"
+            : "transparent"};
+    &:hover {
+        filter: brightness(70%);
     }
 `;
