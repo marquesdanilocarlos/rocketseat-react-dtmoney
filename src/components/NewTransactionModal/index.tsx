@@ -7,7 +7,7 @@ import {
 import closeImg from "../../assets/close.svg";
 import incomeImg from "../../assets/income.svg";
 import outcomeImg from "../../assets/outcome.svg";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 interface NewTransactionModalProps {
     isOpen: boolean;
@@ -22,6 +22,25 @@ export function NewTransactionModal({
 
     const [type, setType] = useState("income");
 
+    interface Transaction {
+        title: string;
+        value: number;
+        type: string;
+        category: string;
+    }
+
+    const [transaction, setTransaction] = useState<Transaction>({
+        title: "",
+        value: 0,
+        type: type,
+        category: "",
+    });
+
+    function handleCreateNewTransaction(event: FormEvent) {
+        event.preventDefault();
+        console.log(transaction);
+    }
+
     return (
         <Modal
             isOpen={isOpen}
@@ -29,7 +48,7 @@ export function NewTransactionModal({
             overlayClassName="react-modal-overlay"
             className="react-modal-content"
         >
-            <Container>
+            <Container onSubmit={handleCreateNewTransaction}>
                 <button
                     type="button"
                     onClick={onRequestClose}
@@ -42,11 +61,29 @@ export function NewTransactionModal({
                     className="form-control form-control-lg mb-3"
                     type="text"
                     placeholder="Título"
+                    value={transaction.title}
+                    onChange={(event) => {
+                        setTransaction({
+                            title: event.target.value,
+                            value: transaction.value,
+                            type: type,
+                            category: transaction.category,
+                        });
+                    }}
                 />
                 <input
                     className="form-control form-control-lg mb-3"
                     type="number"
                     placeholder="Valor"
+                    value={transaction.value}
+                    onChange={(event) => {
+                        setTransaction({
+                            title: transaction.title,
+                            value: Number(event.target.value),
+                            type: type,
+                            category: transaction.category,
+                        });
+                    }}
                 />
                 <TransactionTypeContainer
                     className="btn-group mb-3"
@@ -78,6 +115,15 @@ export function NewTransactionModal({
                     className="form-control form-control-lg mb-3"
                     type="text"
                     placeholder="Categoria"
+                    value={transaction.category}
+                    onChange={(event) => {
+                        setTransaction({
+                            title: transaction.title,
+                            value: transaction.value,
+                            type: type,
+                            category: event.target.value,
+                        });
+                    }}
                 />
                 <button className="btn btn-success btn-lg ">Cadastrar</button>
             </Container>
