@@ -32,16 +32,17 @@ export function NewTransactionModal({
 
     const [type, setType] = useState("income");
 
-    const [transaction, setTransaction] = useState<Transaction>({
-        title: "",
-        amount: 0,
-        type: type,
-        category: "",
-    });
+    const [transaction, setTransaction] = useState<Transaction>(
+        {} as Transaction
+    );
 
-    function handleCreateNewTransaction(event: FormEvent) {
+    async function handleCreateNewTransaction(event: FormEvent) {
         event.preventDefault();
-        createNewTransaction(transaction);
+
+        await createNewTransaction(transaction);
+
+        setTransaction({} as Transaction);
+        onRequestClose();
     }
 
     return (
